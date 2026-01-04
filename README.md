@@ -32,3 +32,6 @@ Kubernetes training!!
 29) CronJob!
 30) Rollout?
 31) Blue Green!
+32) What is Helm?
+33) Changing default values!
+34) Structure of Helm Charts!
