@@ -35,3 +35,6 @@ Kubernetes training!!
 32) What is Helm?
 33) Changing default values!
 34) Structure of Helm Charts!
+35) Redis Helm Chart!
+36) Creating an Entrypoint for a Kubernetes Cluster with Ingress!
+37) Ingress TLS
