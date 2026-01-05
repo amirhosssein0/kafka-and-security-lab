@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-number-client-svc
+spec:
+  selector:
+    app: random-number-client
+  type: LoadBalancer
+  ports:
+    - port: 8055
+      targetPort: 5000
