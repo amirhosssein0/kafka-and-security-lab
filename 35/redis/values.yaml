@@ -1,0 +1,55 @@
+# Number of pods in the StatefulSet (one primary + replicas)
+replicaCount: 3
+
+image:
+  repository: redis
+  tag: "7.4"
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "750m"
+    memory: "2Gi"
+
+livenessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+
+service:
+  # Name and port for the headless service (required for a StatefulSet)
+  name: redis-svc
+  port: 6379
+
+persistence:
+  enabled: true
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+config:
+  # Redis configuration for the primary (leader)
+  primary: |-
+    bind 0.0.0.0
+    port 6379
+    protected-mode no
+    appendonly yes
+    dir /redis/data
+
+  # Redis configuration for replicas (followers)
+  replica: |-
+    replicaof redis-0.redis-svc 6379
+    bind 0.0.0.0
+    port 6379
+    protected-mode no
+    appendonly yes
+    dir /redis/data
