@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-number-client-deployment
+spec:
+  selector:
+    matchLabels:
+      app: random-number-client
+  template:
+    metadata:
+      labels:
+        app: random-number-client
+    spec:
+      containers:
+      - name: random-number-client
+        image: aaghamohammadi/random-number-client:1.0.0
+        ports:
+        - containerPort: 5000 
