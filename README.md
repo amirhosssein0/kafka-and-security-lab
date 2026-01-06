@@ -38,3 +38,8 @@ Kubernetes training!!
 35) Redis Helm Chart!
 36) Creating an Entrypoint for a Kubernetes Cluster with Ingress!
 37) Ingress TLS
+38) HorizontalPodAutoscaler
+39) What is nodeName?
+40) Taint and Toleration!
+41) Node Labeling?
+42) Affinity
