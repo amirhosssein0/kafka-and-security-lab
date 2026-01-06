@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-kube
+spec:
+  selector:
+    matchLabels:
+      app: hello-kube
+  template:
+    metadata:
+      labels:
+        app: hello-kube
+    spec:
+      nodeName: node02 # without this --> with scheduler
+      containers:
+        - name: web
+          image: aaghamohammadi/hello_kube:1.0.0
