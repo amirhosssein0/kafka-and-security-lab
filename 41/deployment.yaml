@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-kube-critical
+spec:
+  selector:
+    matchLabels:
+      app: hello-kube-critical
+  template:
+    metadata:
+      labels:
+        app: hello-kube-critical
+    spec:
+      nodeSelector:
+        serv: customer
+      containers:
+      - name: web
+        image: aaghamohammadi/hello_kube:1.0.0
