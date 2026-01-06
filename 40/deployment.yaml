@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-kube-critical
+spec:
+  selector:
+    matchLabels:
+      app: hello-kube-critical
+  template:
+    metadata:
+      labels:
+        app: hello-kube-critical
+    spec:
+      tolerations:
+      - key: "gpu"
+        operator: "Equal"
+        value: "true"       #gpu=true
+        effect: "NoSchedule"
+      containers:
+      - name: web
+        image: aaghamohammadi/hello_kube:1.0.0
