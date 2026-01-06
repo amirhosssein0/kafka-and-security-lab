@@ -7,8 +7,8 @@ spec:
     app: random-number-client
   type: NodePort
   ports:
-    port: 8055 #Service's port
-    targetPort: 5000 #Pod's port
-    nodePort: 30080 #Node's port
+    - port: 8055 #Service's port
+      targetPort: 5000 #Pod's port
+      nodePort: 30080 #Node's port
 
 # user --> node(30080) --> service(8055) --> pod(5000) --> http://NODEIP:<nodeport>
