@@ -1,23 +1,19 @@
-Node Labeling and Node Selector
+Node Affinity
 
-In previous sections, we talked about taints and nodeName.
-In this section, we want to see another way to decide which node Pods should run on.
+In the previous section, we learned how to use labels.
+But now let’s assume our requirements become more complex and we need additional logic.
 
-There is a concept called a label that can be assigned to nodes. A node can have multiple labels.
+For example, we want our Pods to run on nodes that have certain labels and do not have certain other labels—in other words, more complex logic.
 
-When a node is added to Kubernetes, the platform that provides the cluster automatically assigns a set of well-known, default labels to it.
+In this case, nodeSelector is no longer sufficient, because the logic has become more advanced and simple equality or label existence checks are not enough.
+For example, we might want nodes that are a subset of a group of labels, or nodes that match some labels but explicitly exclude others.
 
-1) kubectl get node node02 --show-labels
+1) kubectl get nodes --show-labels
 
-create personal label:
-2) kubectl label node node02 serv=customer
+2) kubectl label node node02 gpu=true
 
 3) kubectl apply -f deployment.yaml
 
 4) kubectl get pods -o wide
 
-5) kubectl label node node02 serv- => revert label
-
-It’s kind of the opposite of taints, because here we are explicitly saying which nodes these Pods should run on.
-
-Instead of blocking Pods from running on certain nodes (like with taints), we are selecting specific nodes and telling Kubernetes that the Pods must be scheduled on those nodes.
+5) kubectl label node node02 gpu-
