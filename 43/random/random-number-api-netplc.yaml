@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-random-number-client-communication
+spec:
+  podSelector:
+    matchLabels:
+      app: random-number-api
+  policyTypes:
+  - Ingress #recieve request
+  - Egress # send response
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: random-number-client
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: random-number-client
