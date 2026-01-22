@@ -15,9 +15,9 @@ spec:
             - /bin/sh
             - -c
             - |
-              tar czvf /logs/archive-$(date +\%s).tar.gz -C /logs app.log && 
+              tar czvf /logs/archive-$(date +\%s).tar.gz -C /logs apps.log && 
               echo "Cleaning up original log" && 
-              > /logs/app.log
+              > /logs/apps.log
             volumeMounts:
               - name: logs
                 mountPath: /logs
