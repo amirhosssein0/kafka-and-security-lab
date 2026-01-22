@@ -43,3 +43,11 @@ Kubernetes training!!
 40) Taint and Toleration!
 41) Node Labeling?
 42) Affinity
+43) NetworkPolicies
+44) ServiceAccount
+45) DaemonSet
+46) Argo CD!
+47) EFK Stack!
+48) Prometheus And Grafana!
+49) Jupiterhub!
+50) Role and Rbac!
