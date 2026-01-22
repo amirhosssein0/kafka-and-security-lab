@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: "nginx"
+  tls:
+  - hosts:
+    - random.app.local
+    - spacex.app.local
+    secretName: tls-secret
+  rules:
+  - host: random.app.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: random-number-client-svc
+            port:
+              number: 8080
+  - host: spacex.app.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: spacex-app
+            port:
+              number: 8081
