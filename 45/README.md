@@ -1,4 +1,4 @@
-DaemonSet
+mainDaemonSet
 
 A DaemonSet is a controller, meaning it manages a set of Pods. The Pods that a DaemonSet deploys are designed to run on every node in the cluster, unless we restrict them to specific nodes using a nodeSelector or other mechanisms.
 
