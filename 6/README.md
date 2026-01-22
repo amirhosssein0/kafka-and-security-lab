@@ -6,7 +6,7 @@ When each Pod is created, a virtual IP address is assigned to it.
 Here, on our node, we created two Deployments, each managing one Pod, and in each Pod there is an NGINX container.
 
 1) 
-    kubectl apply -f hello-kube-1.yaml -f hello-kube-2.yam
+    kubectl apply -f hello-kube-1.yaml -f hello-kube-2.yaml
 
 2) 
     kubectl get deployments => here we see 2 deployments.
