@@ -1,7 +1,7 @@
 What is Helm?
 
 Helm is a package manager.
-It helps us package complex Kubernetes applications—written as multiple manifest files—so we can share them with others and customize them. Then, with aپ single command like helm install, we can install the app.
+It helps us package complex Kubernetes applications—written as multiple manifest files—so we can share them with others and customize them. Then, with a single command like helm install, we can install the app.
 
 Instead of manually managing and applying many YAML files, we bundle everything with Helm and install it much more easily.
 
