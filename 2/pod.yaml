@@ -4,9 +4,11 @@ kind: Pod
 
 metadata:
   name: hello-kube      #pod's name
+  labels:
+    app: hello_kube
 
 spec:         #describe the contents in our pod
   containers:
   - name: web
-    image: asdfghjkl0/hello-kube-amir:1.0.0
+    image: aaghamohammadi/hello_kube:1.0.0
 
