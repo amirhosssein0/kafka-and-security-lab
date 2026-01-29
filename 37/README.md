@@ -1,4 +1,4 @@
-ngress TLS with Self-Signed Certificate
+Ingress TLS with Self-Signed Certificate
 
 1) Generate the Self‑Signed Certificate
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \

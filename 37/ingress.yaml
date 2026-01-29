@@ -21,7 +21,7 @@ spec:
           service:
             name: random-number-client-svc
             port:
-              number: 8080
+              number: 8055
   - host: spacex.app.local
     http:
       paths:
@@ -31,4 +31,4 @@ spec:
           service:
             name: spacex-app
             port:
-              number: 8081
+              number: 8056
