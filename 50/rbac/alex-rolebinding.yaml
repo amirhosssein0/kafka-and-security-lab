@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: sarah-common-developer-binding
+  name: alex-common-developer-binding
   namespace: customer
 subjects:
   - kind: User
