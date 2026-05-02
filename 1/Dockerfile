@@ -1,3 +1,3 @@
-FROM nginx:1.27-alpine
+FROM docker.arvancloud.ir/nginx
 
 COPY html/ /user/share/nginx/html/

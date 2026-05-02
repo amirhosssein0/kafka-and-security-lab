@@ -17,9 +17,6 @@ spec:
             name: random-number-client-svc
             port:
               number: 8055
-  - host: app
-    http:
-      paths:
       - path: /x
         pathType: Prefix
         backend:
