@@ -32,3 +32,37 @@ spec:
             name: spacex-app
             port:
               number: 8056
+
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  tls:
+    - hosts:
+      - shoombool
+      secretName: tls-secret
+  rules:
+    - host: shoombool
+      http:
+        paths:
+          - path: /login
+            pathType: Prefix
+            backend:
+              service:
+                name: login-svc
+                port:
+                  number: 8080
+          - path: /logout
+            pathType: Prefix
+            backend:
+              service:
+                name: logout-svc
+                port:
+                  number: 8086
