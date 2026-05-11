@@ -51,3 +51,4 @@ Kubernetes training!!
 48) Prometheus And Grafana!
 49) Jupiterhub!
 50) Role and Rbac!
+51) Cluster maintenance!
