@@ -1,6 +1,20 @@
 1) openssl genrsa -out amir.key 2048
 2) openssl req -new -key ./amir.key -out amir.csr -subj "/CN=amir/O=customer-developers"
-3) openssl x509 -req -in amir.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out amir.crt -days 500
+3) 
+```
+  cat <<EOF | kubectl apply -f -
+  apiVersion: certificates.k8s.io/v1
+  kind: CertificateSigningRequest
+  metadata:
+    name: john
+  spec:
+    request: $(cat john.csr | base64 | tr -d '\n')
+    signerName: kubernetes.io/kube-apiserver-client
+    usages:
+    - client auth
+  EOF
+```
+
 4) kubectl config set-cluster kind-cka-lab \
   --server=https://127.0.0.1:39421 \
   --certificate-authority=/etc/kubernetes/pki/ca.crt \
