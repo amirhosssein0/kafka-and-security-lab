@@ -3,8 +3,8 @@
 3) ETCDCTL_API=3 etcdctl snapshot save /opt/etcd-backup.db \
 --endpoints=https://127.0.0.1:2379 \
 --cacert=/etc/kubernetes/pki/etcd/ca.crt \
---cert=/etc/kubernetes/pki/apiserver-etcd-client.crt \
---key=/etc/kubernetes/pki/apiserver-etcd-client.key
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key 
 
 4) etcdutl snapshot restore /opt/etcd-snapshot.db --data-dir=/var/lib/etcd-from-backup
 
