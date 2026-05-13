@@ -6,16 +6,16 @@
   apiVersion: certificates.k8s.io/v1
   kind: CertificateSigningRequest
   metadata:
-    name: john
+    name: amir
   spec:
-    request: $(cat john.csr | base64 | tr -d '\n')
+    request: $(cat amir.csr | base64 | tr -d '\n')
     signerName: kubernetes.io/kube-apiserver-client
     usages:
     - client auth
   EOF
 ```
-4) kubectl certificate approve john
-5) kubectl get csr john -o jsonpath='{.status.certificate}' | base64 -d > john.crt
+4) kubectl certificate approve amir
+5) kubectl get csr amir -o jsonpath='{.status.certificate}' | base64 -d > amir.crt
 6) kubectl config set-cluster kind-cka-lab \
   --server=https://127.0.0.1:39421 \
   --certificate-authority=/etc/kubernetes/pki/ca.crt \
