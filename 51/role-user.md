@@ -21,19 +21,19 @@ spec:
   --server=https://127.0.0.1:39421 \
   --certificate-authority=/etc/kubernetes/pki/ca.crt \
   --embed-certs=true \
-  --kubeconfig=amir-kubeconfig.yaml
+  --kubeconfig=amir.yaml
 7) cat amir-kubeconfig.yaml
 8) kubectl config set-credentials amir \
   --client-certificate=amir.crt \
   --client-key=amir.key \
   --embed-certs=true \
-  --kubeconfig=amir-kubeconfig.yaml
+  --kubeconfig=amir.yaml
 9) kubectl config set-context amir-context \
   --cluster=kind-cka-lab \
   --user=amir \
   --namespace=customer \
-  --kubeconfig=amir-kubeconfig.yaml 
-10) kubectl config use-context amir-context --kubeconfig=amir-kubeconfig.yaml (amir-context to amir-kubeconfig.yaml set mishe just)
+  --kubeconfig=amir.yaml 
+10) kubectl config use-context amir-context --kubeconfig=amir.yaml (amir-context to amir-kubeconfig.yaml set mishe just)
 11) kubectl config view --kubeconfig=amir.yaml
 12) kubectl get pods --kubeconfig=amir.yaml -n customer
 13) export KUBECONFIG=~/amir.yaml
