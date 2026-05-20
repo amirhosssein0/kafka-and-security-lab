@@ -6,6 +6,11 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: "nginx"
+  defaultBackend:            # اگه هیچ path ای match نشد
+    service:
+      name: random-number-client-svc
+      port:
+        number: 8055
   rules:
   - host: app
     http:
