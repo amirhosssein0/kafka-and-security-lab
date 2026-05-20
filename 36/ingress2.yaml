@@ -1,0 +1,82 @@
+# ============================================
+# Ingress & IngressController Cheatsheet
+# CKA Practice - Day 16
+# ============================================
+
+
+# -----------------------------------------------
+# Ingress با path routing
+# -----------------------------------------------
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-test
+spec:
+  ingressClassName: nginx    # اسم IngressController
+  rules:
+  - host: "foo.bar.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/app1"
+        backend:
+          service:
+            name: app1-svc
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/app2"
+        backend:
+          service:
+            name: app2-svc
+            port:
+              number: 80
+
+
+# -----------------------------------------------
+# Ingress با default backend
+# -----------------------------------------------
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-test
+spec:
+  ingressClassName: nginx
+  defaultBackend:            # اگه هیچ path ای match نشد
+    service:
+      name: app1-svc
+      port:
+        number: 80
+  rules:
+  - host: "foo.bar.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/app1"
+        backend:
+          service:
+            name: app1-svc
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/app2"
+        backend:
+          service:
+            name: app2-svc
+            port:
+              number: 80
+
+
+# -----------------------------------------------
+# pathType ها
+# -----------------------------------------------
+# Prefix    → /app1 match می‌کنه با /app1, /app1/, /app1/foo
+# Exact     → فقط دقیقاً /app1 match می‌کنه
+
+
+# -----------------------------------------------
+# دستورات مفید
+# -----------------------------------------------
+# kubectl get ingress
+# kubectl describe ingress ingress-test
+# kubectl get ingressclass
