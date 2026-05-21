@@ -1,3 +1,0 @@
-# چک کردن /etc/resolv.conf داخل pod:
-# cat /etc/resolv.conf
-# باید nameserver 10.96.0.10 داشته باشه
