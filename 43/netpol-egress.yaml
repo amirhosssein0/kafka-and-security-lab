@@ -1,0 +1,133 @@
+# ============================================
+# NetworkPolicy — Egress + Namespace Cheatsheet
+# CKA Practice - Day 18
+# ============================================
+
+
+# -----------------------------------------------
+# Egress Policy
+# -----------------------------------------------
+# کنترل می‌کنه pod به کجا می‌تونه ترافیک بفرسته
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: be-egress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: be           # این policy روی be اعمال میشه
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: db       # فقط به db می‌تونه بفرسته
+    ports:
+    - protocol: TCP
+      port: 5432
+
+
+# -----------------------------------------------
+# namespaceSelector + podSelector
+# -----------------------------------------------
+
+# OR — از این namespace یا از این pod (خط تیره جدا):
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-netpol-or
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      app: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:    # ← خط تیره = OR
+        matchLabels:
+          env: prod
+    - podSelector:          # ← خط تیره = OR
+        matchLabels:
+          app: be
+    ports:
+    - protocol: TCP
+      port: 80
+
+---
+# AND — از pod هایی که داخل این namespace باشن (بدون خط تیره):
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-netpol-and
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      app: db
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:    # ← بدون خط تیره = AND
+        matchLabels:
+          env: prod
+      podSelector:          # ← زیر هم = AND
+        matchLabels:
+          app: be
+    ports:
+    - protocol: TCP
+      port: 80
+
+
+# -----------------------------------------------
+# !! مهم‌ترین نکته CKA !!
+# -----------------------------------------------
+# خط تیره جدا (-) = OR
+# زیر هم بدون خط تیره = AND
+#
+# یه خط تیره فرق بین AND و OR!
+
+
+# -----------------------------------------------
+# Ingress + Egress با هم
+# -----------------------------------------------
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: full-netpol
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 80
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: db
+    ports:
+    - protocol: TCP
+      port: 5432
+
+
+# -----------------------------------------------
+# label زدن روی namespace
+# -----------------------------------------------
+# kubectl label namespace prod env=prod
+# kubectl label namespace dev env=dev
+# kubectl get namespace --show-labels
