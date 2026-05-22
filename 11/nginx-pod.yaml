@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
   - name: nginx
-    image: docker.arvancloud.ir/nginx
+    image: nginx
     ports:
     - containerPort: 80
