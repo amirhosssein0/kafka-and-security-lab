@@ -1,4 +1,4 @@
-Now that Alex has been authenticated, we want to restrict his access within the customer namespace.
+Alex has been authenticated, we want to restrict his access within the customer namespace.
 
 1) kubectl create namespace customer
 
