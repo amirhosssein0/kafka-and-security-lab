@@ -1,20 +1,18 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Depolyment
 metadata:
-  name: hello-kube
+  name: test-deploy
+  labels:
+    app: web
 spec:
   selector:
     matchLabels:
-      app: hello-kube
+      app: web
   template:
     metadata:
       labels:
-        app: hello-kube
+        app: web
     spec:
       containers:
-      - name: web
-        image: aaghamohammadi/hello_kube:1.0.0 
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        - name: web
+          image: nginx
