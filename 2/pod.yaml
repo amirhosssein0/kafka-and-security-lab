@@ -1,14 +1,10 @@
-apiVersion: v1        #our kubernetes version
-
+apiVersion: v1
 kind: Pod
-
 metadata:
-  name: hello-kube      #pod's name
+  name: test
   labels:
-    app: hello_kube
-
-spec:         #describe the contents in our pod
+    app: web
+spec:
   containers:
-  - name: web
-    image: aaghamohammadi/hello_kube:1.0.0
-
+    - name: web
+      image: docker.arvancloud.ir/nginx
