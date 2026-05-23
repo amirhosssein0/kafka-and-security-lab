@@ -7,4 +7,4 @@ metadata:
 spec:
   containers:
     - name: web
-      image: docker.arvancloud.ir/nginx
+      image: nginx
