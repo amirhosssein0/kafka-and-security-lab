@@ -25,4 +25,4 @@ argocd-server        ClusterIP   10.43.62.43     80/TCP,443/TCP
 
 9) echo <password> | base64 --decode
 
-login
+login 
