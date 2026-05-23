@@ -1,6 +1,6 @@
 1) 
     kubectl run pod-name --image=image-name-in-dockerhub --restart=Never
-    kubectl run hello-kube --image=asdfghjkl0/hello-kube-amir:1.0.0  --restart=Never
+    kubectl run hello-kube --image=nginx --restart=Never
 
 2) 
     kuberctl get pods 
