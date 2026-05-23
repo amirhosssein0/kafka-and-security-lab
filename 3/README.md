@@ -8,7 +8,7 @@ Controller:
     If node2 fails, it's pod cant run. On the other hand, we dont want to create a pod in node1 manually beside 2 others pods. We want to kubernetes adds 1 pod in node1 automaticaly.
 
 1) 
-    kubectl create deployment hello-kube --image=asdfghjkl0/hello-kube-amir:1.0.0 
+    kubectl create deployment hello-kube --image=nginx
 
 2) 
     kubectl get deployment
@@ -25,29 +25,6 @@ Controller:
 
 5) 
     kubectl get deploy hello-kube -o json
-
-
-            "template": {
-                "metadata": {
-                    "creationTimestamp": null,
-                    "labels": {
-                        "app": "hello-kube"      
-                    }
-                },
-                "spec": {
-                    "containers": [
-                        {
-                            "image": "asdfghjkl0/hello-kube-amir:1.0.0",
-                            "imagePullPolicy": "IfNotPresent",
-                            "name": "hello-kube-amir",
-                            "resources": {},
-                            "terminationMessagePath": "/dev/termination-log",
-                            "terminationMessagePolicy": "File"
-                        }
-                    ],
-                }
-            }
-    deployment manages pods with "app": "hello-kube" lable.
 
 6) 
     kubectl get pods -l app=hello-kube
