@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gce-sc
+provisioner: pd.csi.storage.gke.io
+volumeBindingMode: WaitForFirstConsumer
+parameters:
+  type: pd-standard   # Use "pd-standard" or "pd-balanced" for the disk type
+  fstype: ext4        # Filesystem type (ext4 is common for Linux)

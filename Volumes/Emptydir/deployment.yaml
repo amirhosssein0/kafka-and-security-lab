@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cache-example
+  labels:
+    app: cache-app
+spec:
+  selector:
+    matchLabels:
+      app: cache-app  
+  template:
+    metadata:
+      labels:
+        app: cache-app
+    spec:
+      containers:
+      - name: cache-container
+        image: busybox
+        command:
+            [
+              "sh",
+              "-c",
+              'i=1; while true; do echo "Cached data $i at $(date)" >> /cache/data.txt; i=$((i+1)); sleep 5; done',
+            ]
+        volumeMounts:
+          - name: cache-volume
+            mountPath: /cache
+      volumes:
+        - name: cache-volume
+          emptyDir: {}

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  selector:
+    matchLabels:
+      app: postgres-pod
+  template:
+    metadata:
+      labels:
+        app: postgres-pod
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15.3
+          ports:
+            - containerPort: 5432
+          env:
+            - name:  POSTGRES_PASSWORD_FILE
+              value: /etc/secrets/postgres-password 
+          volumeMounts:
+            - name: postgres-secret-volume
+              mountPath: /etc/secrets
+              readOnly: true
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data # on container
+      volumes:
+        - name: postgres-secret-volume
+          secret:
+            secretName: postgres-secret
+            defaultMode: 0400
+        - name: postgres-data
+          hostPath:
+            path: /data/postgres # on node
+            type: DirectoryOrCreate # Directory means the path must already exist; otherwise, it won’t be created.Create will create the directory if it doesn’t exist.

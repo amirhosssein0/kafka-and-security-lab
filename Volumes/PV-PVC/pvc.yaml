@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+  # it doesnt matter AWS, Azure or local
+  # we just define our requirements
+
+  #after defining storageclass
+  storageClassName: gce-sc
+
+  #after defining pv.yaml
+  # storageClassName: manual
