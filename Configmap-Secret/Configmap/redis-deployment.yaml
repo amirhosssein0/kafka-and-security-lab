@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+spec:
+  selector:
+    matchLabels:
+      app: redis-pod
+  template:
+    metadata:
+      labels:
+        app: redis-pod
+    spec:
+      containers:
+        - name: redis
+          image: redis
+          command: ["redis-server"] 
+          args: ["/usr/local/etc/redis/redis.conf"]
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: redis-config-volume
+              mountPath: /usr/local/etc/redis
+      volumes:
+        - name: redis-config-volume
+          configMap:
+            name: redis-config #key in redis-config --> it will inverted to a file with this name
