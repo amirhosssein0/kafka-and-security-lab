@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-number-api-deployment-green
+  namespace: default
+spec:
+  strategy:
+    type: Recreate
+  replicas: 3
+  selector:
+    matchLabels:
+      app: random-number-api-green
+  template:
+    metadata:
+      labels:
+        app: random-number-api-green
+    spec:
+      containers:
+        - name: random-number-api
+          image: aaghamohammadi/random-number-api:2.0.0
+          volumeMounts:
+            - name: logs
+              mountPath: /logs
+          resources:
+            requests:
+              cpu: 20m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 100Mi
+      volumes:
+        - name: logs
+          emptyDir: {}
