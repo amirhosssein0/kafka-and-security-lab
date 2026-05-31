@@ -1,0 +1,12 @@
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: spacex-api-service-slice
+  labels:
+    kubernetes.io/service-name: spacex-api-service  #which service should be connected to this endpoint??
+addressType: IPv4
+endpoints:
+  - addresses:
+    - 188.114.99.0
+ports:
+- port: 80

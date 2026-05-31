@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spacex-api-service    #It doesnt need selector, because it doesnt manage pods. It wil connect to an external system
+spec:
+  type: ExternalName
+  externalName: api.spacexdata.com   #Real address of external system

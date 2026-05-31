@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceX Launch Viewer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Latest SpaceX Launch</h1>
+        <button id="fetch-data">Fetch Launch Info</button>
+        <div id="response">
+            <p><strong>Mission Name:</strong> <span id="mission-name">-</span></p>
+            <p><strong>Launch Date:</strong> <span id="launch-date">-</span></p>
+            <p><strong>Rocket ID:</strong> <span id="rocket-id">-</span></p>
+            <p><strong>Details:</strong> <span id="details">-</span></p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: spacex-api-service
+spec:
+  clusterIP: None   #Headless service doesnt need selector and it is clusterip                                      
+  ports:                                    
+  - port: 80
+    
