@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-role-config
+data:
+  primary.conf: |    #config of leader
+    bind 0.0.0.0
+    port 6379
+    protected-mode no
+    appendonly yes
+    dir /redis/data
+  replica.conf: |    #config of follower
+    replicaof redis-0.redis-svc 6379 
+    bind 0.0.0.0
+    port 6379
+    protected-mode no
+    appendonly yes
+    dir /redis/data
+
+#replicaof --> address of leader --> <pod-name>.<service>.<namespace>.svc.cluster.local

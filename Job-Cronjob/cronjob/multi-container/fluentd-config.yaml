@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+  namespace: default
+data:
+  fluentd.conf: |
+    <source>
+      @type tail
+      path /logs/app.log
+      pos_file /fluentd/logs/app.pos
+      tag flask.app
+      <parse>
+        @type none
+      </parse>
+    </source>
+
+    <match flask.app>
+      @type stdout
+    </match>

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-svc #name of service
+spec:
+  ports:
+  - port: 6379
+  clusterIP: None #headless
+  selector:
+    app: redis-sts #label of pods
+
+# This is a bit different from what we learned about Headless Services earlier.
+
+# Back then, we said we shouldn’t define a selector, and instead we create an EndpointSlice ourselves and attach the IPs to the Headless Service.
+
+# But here, we define a StatefulSet object and connect it to a Headless Service using the Service name and the Pods’ labels/selector.

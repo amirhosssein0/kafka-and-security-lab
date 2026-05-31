@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-container-pod
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi-container-pod
+  template:
+    metadata:
+      labels:
+        app: multi-container-pod
+    spec:
+      containers:
+        - name: random-number-api
+          image: aaghamohammadi/random-number-api:2.0.0
+          volumeMounts:
+            - name: logs
+              mountPath: /logs
+          resources:
+            requests:
+              cpu: 20m
+              memory: 50Mi
+            limits:
+              cpu: 50m 
+              memory: 100Mi
+        - name: fluentd-sidecar
+          image: fluent/fluentd:v1.16-1
+          command: ["fluentd"]
+          args: ["-c", "/fluentd/etc/fluentd.conf", "-v"]
+          resources:
+            requests:
+              cpu: 20m
+              memory: 50Mi
+            limits:
+              cpu: 50m 
+              memory: 100Mi
+          volumeMounts:
+            - name: fluentd-config
+              mountPath: /fluentd/etc/fluentd.conf
+              subPath: fluentd.conf
+            - name: logs
+              mountPath: /logs
+      volumes:
+        - name: fluentd-config
+          configMap:
+            name: fluentd-config
+        - name: logs
+          persistentVolumeClaim:
+            claimName: logs-pvc
+    

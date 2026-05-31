@@ -1,0 +1,25 @@
+apiVersion: batch/v1 #!
+kind: Job
+metadata:
+  name: redis-data-loader
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      #Never: If the container’s exit code is not 0, mark the Pod as failed and replace it with a new Pod.
+      #OnFailure: We allow some errors to happen without immediately marking the Pod as failed. Kubernetes will restart the container, and if it keeps failing after a few retries, then it treats the Pod as failed.
+      initContainers:
+        - name: wait-for-primary
+          image: busybox:1.36
+          #It sends a request to the leader to check whether it’s up or not, because we can’t write to Redis until the leader is running.
+          #It checks whether it can reach the leader. If it can’t, it waits 2 seconds and tries again, and eventually it exits.
+          command: ['sh', '-c', 'until nslookup redis-0.redis-svc.default.svc.cluster.local; do echo "Waiting for Redis primary..."; sleep 2; done']
+      containers:
+        - name: data-loader
+          image: redis:7.4
+          command: 
+            - bash
+            - "-c"
+            - |
+              redis-cli -h redis-0.redis-svc.default.svc.cluster.local SET capital:IRAN "Tehran"
+              redis-cli -h redis-0.redis-svc.default.svc.cluster.local SET capital:UK "London"
