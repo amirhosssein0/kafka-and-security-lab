@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis #redis-0 redis-1 redis-2
+spec:
+  selector:
+    matchLabels:
+      app: redis-sts
+  serviceName: redis-svc #headless
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: redis-sts
+    spec:
+      terminationGracePeriodSeconds: 10
+      #Here, we want to create an init container that first copies the configuration files for the leader and the followers into the Redis server.
+      initContainers:
+      - name: init-redis
+        image: redis:7.4
+        command:
+        - bash
+        - "-c"
+        - |
+          set -ex
+          # Generate server-id from Pod ordinal index.
+          [[ `hostname` =~ -([0-9]+)$ ]] || exit 1
+          ordinal=${BASH_REMATCH[1]}
+          echo "ordinal ${ordinal}"
+          # Copy appropriate config files from config-map to emptyDir.
+          mkdir -p /redis/conf/
+          if [[ $ordinal -eq 0 ]]; then
+            cp /mnt/redis-configmap/primary.conf /redis/conf/redis.conf
+          else
+            cp /mnt/redis-configmap/replica.conf /redis/conf/redis.conf
+          fi
+          cat /redis/conf/redis.conf
+        volumeMounts:
+        - name: redis-config-volume
+          mountPath: /redis/conf/
+        - name: redis-configmap-volume
+          mountPath: /mnt/redis-configmap
+      containers:
+      - name: redis-container
+        image: redis:7.4
+        command: ["redis-server"]
+        args: ["/redis/conf/redis.conf"]
+        volumeMounts:
+        - name: redis-config-volume
+          mountPath: /redis/conf/
+        - name: redis-pvc #!
+          mountPath: /redis/data  #dir in redis-config.yaml
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: 750m
+            memory: 2Gi
+      volumes:
+      - name: redis-configmap-volume #it creates 2 config files
+        configMap:
+          name: redis-role-config  #mount in /mnt/redis-configmap/
+      - name: redis-config-volume
+        emptyDir: {} #mount in  /redis/conf/
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-pvc #!
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
