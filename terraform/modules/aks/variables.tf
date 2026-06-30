@@ -33,7 +33,7 @@ variable "sku_tier" {
 variable "automatic_upgrade_channel" {
   description = "AKS automatic upgrade channel (patch, rapid, node-image, stable, or none)"
   type        = string
-  default     = "none"
+  default     = null
 }
 
 variable "outbound_type" {
