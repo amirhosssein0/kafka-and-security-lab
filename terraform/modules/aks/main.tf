@@ -1,0 +1,30 @@
+resource "azurerm_kubernetes_cluster" "this" {
+  name                      = var.name
+  location                  = var.location
+  resource_group_name       = var.resource_group_name
+  dns_prefix                = var.dns_prefix
+  kubernetes_version        = var.kubernetes_version
+  sku_tier                  = var.sku_tier
+  automatic_upgrade_channel = var.automatic_upgrade_channel
+  tags                      = var.tags
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  default_node_pool {
+    name                 = "default"
+    vm_size              = var.node_vm_size
+    vnet_subnet_id       = var.vnet_subnet_id
+    os_disk_size_gb      = var.os_disk_size_gb
+    auto_scaling_enabled = var.auto_scaling_enabled
+    min_count            = var.min_count
+    max_count            = var.max_count
+  }
+
+  network_profile {
+    network_plugin      = var.network_plugin
+    network_plugin_mode = var.network_plugin_mode
+    outbound_type       = var.outbound_type
+  }
+}
