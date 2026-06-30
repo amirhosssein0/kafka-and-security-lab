@@ -27,4 +27,11 @@ resource "azurerm_kubernetes_cluster" "this" {
     network_plugin_mode = var.network_plugin_mode
     outbound_type       = var.outbound_type
   }
+
+  dynamic "key_vault_secrets_provider" {
+  for_each = var.key_vault_secrets_provider_enabled ? [1] : []
+  content {
+    secret_rotation_enabled = true
+  }
+}
 }

@@ -93,3 +93,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "key_vault_secrets_provider_enabled" {
+  description = "Enable the AKS Key Vault Secrets Provider (CSI driver) addon"
+  type        = bool
+  default     = true
+}
