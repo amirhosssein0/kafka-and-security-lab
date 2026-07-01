@@ -79,7 +79,7 @@ variable "min_count" {
 variable "max_count" {
   description = "Maximum node count — caps cost"
   type        = number
-  default     = 4
+  default     = 4 
 }
 
 variable "os_disk_size_gb" {
