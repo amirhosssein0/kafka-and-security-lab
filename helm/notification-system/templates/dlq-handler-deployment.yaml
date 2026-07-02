@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlq-handler
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.dlqHandler.replicas }}
+  selector:
+    matchLabels:
+      app: dlq-handler
+  template:
+    metadata:
+      labels:
+        app: dlq-handler
+    spec:
+      containers:
+        - name: dlq-handler
+          image: "{{ .Values.acrLoginServer }}/{{ .Values.dlqHandler.image.repository }}:{{ .Values.dlqHandler.image.tag }}"
+          env:
+            - name: KAFKA_BROKERS
+              value: {{ .Values.kafka.brokers | quote }}
+            - name: KAFKA_DLQ_TOPIC
+              value: {{ .Values.kafka.dlqTopic | quote }}
+            - name: KAFKA_CONSUMER_GROUP
+              value: "dlq-handler-group"
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi

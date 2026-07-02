@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.consumer.replicas }}
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      serviceAccountName: notification-apps
+      containers:
+        - name: consumer
+          image: "{{ .Values.acrLoginServer }}/{{ .Values.consumer.image.repository }}:{{ .Values.consumer.image.tag }}"
+          env:
+            - name: KAFKA_BROKERS
+              value: {{ .Values.kafka.brokers | quote }}
+            - name: KAFKA_TOPIC
+              value: {{ .Values.kafka.topic | quote }}
+            - name: KAFKA_DLQ_TOPIC
+              value: {{ .Values.kafka.dlqTopic | quote }}
+            - name: KAFKA_CONSUMER_GROUP
+              value: "notification-consumer-group"
+            - name: SMTP_FROM
+              value: "noreply@kafka-lab.local"
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-credentials
+                  key: SMTP_HOST
+            - name: SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-credentials
+                  key: SMTP_PORT
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-credentials
+                  key: SMTP_USERNAME
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-credentials
+                  key: SMTP_PASSWORD
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          volumeMounts:
+            - name: smtp-secrets
+              mountPath: "/mnt/secrets"
+              readOnly: true
+      volumes:
+        - name: smtp-secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: smtp-secrets

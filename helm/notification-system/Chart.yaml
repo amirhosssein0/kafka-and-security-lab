@@ -1,0 +1,9 @@
+apiVersion: v2
+name: notification-system
+description: Kafka-based event-driven notification system
+type: application
+version: 0.1.0
+appVersion: "v1"
+maintainers:
+  - name: amirhossein
+    url: https://github.com/amirhosssein0
