@@ -78,7 +78,7 @@ func main() {
 	groupID := getEnv("KAFKA_CONSUMER_GROUP", "notification-consumer-group")
 
 	smtpHost := getEnv("SMTP_HOST", "localhost")
-	smtpPort := getEnv("SMTP_PORT", "1025")
+	smtpPort := getEnv("SMTP_PORT", "587")
 	smtpUsername := getEnv("SMTP_USERNAME", "")
 	smtpPassword := getEnv("SMTP_PASSWORD", "")
 	smtpFrom := getEnv("SMTP_FROM", "noreply@kafka-lab.local")
