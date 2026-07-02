@@ -41,21 +41,22 @@ func getEnvInt(key string, fallback int) int {
 	return fallback
 }
 
-func sendEmail(smtpHost, smtpPort, from, to, subject, body string) error {
+func sendEmail(smtpHost, smtpPort, username, password, from, to, subject, body string) error {
 	addr := smtpHost + ":" + smtpPort
+	auth := smtp.PlainAuth("", username, password, smtpHost)
 	msg := []byte("To: " + to + "\r\n" +
 		"From: " + from + "\r\n" +
 		"Subject: " + subject + "\r\n" +
 		"\r\n" + body + "\r\n")
-	return smtp.SendMail(addr, nil, from, []string{to}, msg)
+	return smtp.SendMail(addr, auth, from, []string{to}, msg)
 }
 
-func sendWithRetry(smtpHost, smtpPort, from string, notif NotificationMessage, maxRetries int, baseDelay time.Duration) error {
+func sendWithRetry(smtpHost, smtpPort, username, password, from string, notif NotificationMessage, maxRetries int, baseDelay time.Duration) error {
 	var lastErr error
 	delay := baseDelay
 
 	for attempt := 1; attempt <= maxRetries; attempt++ {
-		err := sendEmail(smtpHost, smtpPort, from, notif.Email, "Notification", notif.Message)
+		err := sendEmail(smtpHost, smtpPort, username, password, from, notif.Email, "Notification", notif.Message)
 		if err == nil {
 			return nil
 		}
@@ -78,6 +79,8 @@ func main() {
 
 	smtpHost := getEnv("SMTP_HOST", "localhost")
 	smtpPort := getEnv("SMTP_PORT", "1025")
+	smtpUsername := getEnv("SMTP_USERNAME", "")
+	smtpPassword := getEnv("SMTP_PASSWORD", "")
 	smtpFrom := getEnv("SMTP_FROM", "noreply@kafka-lab.local")
 
 	maxRetries := getEnvInt("MAX_RETRIES", 3)
@@ -118,7 +121,7 @@ func main() {
 			continue
 		}
 
-		err = sendWithRetry(smtpHost, smtpPort, smtpFrom, notif, maxRetries, baseDelay)
+		err = sendWithRetry(smtpHost, smtpPort, smtpUsername, smtpPassword, smtpFrom, notif, maxRetries, baseDelay)
 		if err != nil {
 			log.Printf("all retries failed for %s, sending to DLQ", notif.Email)
 
