@@ -6,7 +6,7 @@ producer:
   image:
     repository: producer
     tag: v1
-  replicas: 1
+  replicas: 2
   port: 8080
 
 consumer:
