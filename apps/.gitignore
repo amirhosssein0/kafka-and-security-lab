@@ -1,0 +1,11 @@
+# Compiled binary
+server
+*.exe
+
+# Go build/test artifacts
+*.test
+*.out
+
+# IDE
+.vscode/
+.idea/
