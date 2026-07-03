@@ -14,3 +14,7 @@ output "key_vault_uri" {
 output "resource_group_name" {
   value = module.resource_group.name
 }
+
+output "workload_identity_client_id" {
+  value = azurerm_user_assigned_identity.workload.client_id
+}

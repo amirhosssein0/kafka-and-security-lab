@@ -63,3 +63,25 @@ module "keyvault" {
   secrets_reader_principal_id = module.aks.key_vault_secrets_provider_object_id
   tags                        = local.tags
 }
+
+resource "azurerm_user_assigned_identity" "workload" {
+  name                = "id-notification-apps-dev"
+  location            = var.location
+  resource_group_name = module.resource_group.name
+  tags                = local.tags
+}
+
+resource "azurerm_role_assignment" "workload_kv_reader" {
+  scope                = module.keyvault.key_vault_id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = azurerm_user_assigned_identity.workload.principal_id
+}
+
+resource "azurerm_federated_identity_credential" "workload" {
+  name                = "fic-notification-apps"
+  resource_group_name = module.resource_group.name
+  audience            = ["api://AzureADTokenExchange"]
+  issuer              = module.aks.oidc_issuer_url
+  parent_id           = azurerm_user_assigned_identity.workload.id
+  subject             = "system:serviceaccount:notifications:notification-apps"
+}
