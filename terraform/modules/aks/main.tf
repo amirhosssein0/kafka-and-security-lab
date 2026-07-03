@@ -5,6 +5,8 @@ resource "azurerm_kubernetes_cluster" "this" {
   dns_prefix                = var.dns_prefix
   kubernetes_version        = var.kubernetes_version
   sku_tier                  = var.sku_tier
+  oidc_issuer_enabled       = var.oidc_issuer_enabled
+  workload_identity_enabled = var.workload_identity_enabled
   automatic_upgrade_channel = var.automatic_upgrade_channel
   tags                      = var.tags
 

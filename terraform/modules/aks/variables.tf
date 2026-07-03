@@ -99,3 +99,15 @@ variable "key_vault_secrets_provider_enabled" {
   type        = bool
   default     = true
 }
+
+variable "oidc_issuer_enabled" {
+  description = "Enable OIDC issuer (required for workload identity)"
+  type        = bool
+  default     = true
+}
+
+variable "workload_identity_enabled" {
+  description = "Enable workload identity federation on the cluster"
+  type        = bool
+  default     = true
+}
