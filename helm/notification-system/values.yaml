@@ -28,6 +28,7 @@ dlqHandler:
 keyVault:
   name: kv-kafka-lab-dev
   tenantId: "62c02e1b-f29d-4dda-b8a4-9c8a7b734d78"
+  workloadIdentityClientId: "8c92a23d-93e8-4b50-bfde-7c2996c36a83"
 
 kafka:
   brokers: "kafka-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"

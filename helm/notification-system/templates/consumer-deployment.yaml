@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: consumer
+        azure.workload.identity/use: "true"
     spec:
       serviceAccountName: notification-apps
       containers:
