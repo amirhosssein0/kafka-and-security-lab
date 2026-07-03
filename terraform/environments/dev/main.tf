@@ -7,11 +7,6 @@ locals {
 
 data "azurerm_client_config" "current" {}
 
-data "azurerm_kubernetes_service_versions" "current" {
-  location        = var.location
-  include_preview = false
-}
-
 module "resource_group" {
   source   = "../../modules/resource-group"
   name     = "rg-kafka-lab-dev"
@@ -39,7 +34,7 @@ module "aks" {
   location            = var.location
   resource_group_name = module.resource_group.name
   dns_prefix          = "kafkalabdev"
-  kubernetes_version  = data.azurerm_kubernetes_service_versions.current.latest_version
+  kubernetes_version  = "1.36.1"
   vnet_subnet_id      = module.vnet.subnet_ids["aks"]
   node_vm_size        = var.node_vm_size
   tags                = local.tags

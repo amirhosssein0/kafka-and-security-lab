@@ -30,11 +30,11 @@ variable "sku_tier" {
   default     = "Free"
 }
 
-variable "automatic_upgrade_channel" {
-  description = "AKS automatic upgrade channel (patch, rapid, node-image, stable, or none)"
-  type        = string
-  default     = null
-}
+# variable "automatic_upgrade_channel" {
+#   description = "AKS automatic upgrade channel (patch, rapid, node-image, stable, or none)"
+#   type        = string
+#   default     = null
+# }
 
 variable "outbound_type" {
   description = "Outbound routing type (explicit per Azure March 2026 policy)"
@@ -110,4 +110,10 @@ variable "workload_identity_enabled" {
   description = "Enable workload identity federation on the cluster"
   type        = bool
   default     = true
+}
+
+variable "network_policy" {
+  description = "Network policy engine (azure or calico); required for NetworkPolicy enforcement"
+  type        = string
+  default     = "azure"
 }

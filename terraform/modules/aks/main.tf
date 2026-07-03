@@ -7,7 +7,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   sku_tier                  = var.sku_tier
   oidc_issuer_enabled       = var.oidc_issuer_enabled
   workload_identity_enabled = var.workload_identity_enabled
-  automatic_upgrade_channel = var.automatic_upgrade_channel
+  # automatic_upgrade_channel = var.automatic_upgrade_channel
   tags                      = var.tags
 
   identity {
@@ -28,6 +28,8 @@ resource "azurerm_kubernetes_cluster" "this" {
     network_plugin      = var.network_plugin
     network_plugin_mode = var.network_plugin_mode
     outbound_type       = var.outbound_type
+    network_policy       = var.network_policy
+
   }
 
   dynamic "key_vault_secrets_provider" {
