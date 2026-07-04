@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: consumer-scaledobject
+  namespace: {{ .Values.namespace }}
+spec:
+  scaleTargetRef:
+    name: consumer
+  minReplicaCount: 0
+  maxReplicaCount: 3
+  cooldownPeriod: 30
+  triggers:
+    - type: kafka
+      metadata:
+        bootstrapServers: {{ .Values.kafka.brokers | quote }}
+        consumerGroup: notification-consumer-group
+        topic: {{ .Values.kafka.topic | quote }}
+        lagThreshold: "5"
+        activationLagThreshold: "1"
