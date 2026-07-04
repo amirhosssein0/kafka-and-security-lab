@@ -12,6 +12,13 @@ spec:
           - resources:
               kinds:
                 - Pod
+      exclude:
+        any:
+          - resources:
+              namespaces:
+                - kube-system
+                - kyverno
+                - falco
       validate:
         message: "Every container must define resources.requests and resources.limits (cpu and memory)"
         pattern:
