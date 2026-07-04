@@ -52,3 +52,8 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "aks_subnet_id" {
+  description = "AKS subnet ID allowed to reach Key Vault"
+  type        = string
+}

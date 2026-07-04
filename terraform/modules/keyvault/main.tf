@@ -8,6 +8,12 @@ resource "azurerm_key_vault" "this" {
   purge_protection_enabled   = var.purge_protection_enabled
   soft_delete_retention_days = var.soft_delete_retention_days
   tags                       = var.tags
+
+  network_acls {
+    default_action             = "Deny"
+    bypass                     = "AzureServices"
+    virtual_network_subnet_ids = [var.aks_subnet_id]
+  }
 }
 
 resource "azurerm_role_assignment" "secrets_reader" {

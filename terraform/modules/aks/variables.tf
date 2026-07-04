@@ -117,3 +117,9 @@ variable "network_policy" {
   type        = string
   default     = "azure"
 }
+
+variable "max_pods" {
+  description = "Maximum pods per node"
+  type        = number
+  default     = 110
+}
