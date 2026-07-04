@@ -13,9 +13,22 @@ spec:
       labels:
         app: dlq-handler
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: dlq-handler
           image: "{{ .Values.acrLoginServer }}/{{ .Values.dlqHandler.image.repository }}:{{ .Values.dlqHandler.image.tag }}"
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: KAFKA_BROKERS
               value: {{ .Values.kafka.brokers | quote }}

@@ -14,10 +14,23 @@ spec:
         app: consumer
         azure.workload.identity/use: "true"
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: notification-apps
       containers:
         - name: consumer
           image: "{{ .Values.acrLoginServer }}/{{ .Values.consumer.image.repository }}:{{ .Values.consumer.image.tag }}"
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: KAFKA_BROKERS
               value: {{ .Values.kafka.brokers | quote }}
