@@ -19,6 +19,7 @@ spec:
                 - kube-system
                 - kyverno
                 - falco
+                - velero
       validate:
         message: "Every container must define resources.requests and resources.limits (cpu and memory)"
         pattern:

@@ -19,6 +19,7 @@ spec:
                 - kube-system
                 - kyverno
                 - falco
+                - velero
       validate:
         message: "Privileged containers are not allowed"
         pattern:
