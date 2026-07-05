@@ -16,6 +16,7 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   default_node_pool {
     name                 = "default"
+    temporary_name_for_rotation = "tempdefault"
     vm_size              = var.node_vm_size
     vnet_subnet_id       = var.vnet_subnet_id
     os_disk_size_gb      = var.os_disk_size_gb

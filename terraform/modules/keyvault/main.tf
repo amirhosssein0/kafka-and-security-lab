@@ -10,9 +10,10 @@ resource "azurerm_key_vault" "this" {
   tags                       = var.tags
 
   network_acls {
-    default_action             = "Deny"
     bypass                     = "AzureServices"
-    virtual_network_subnet_ids = [var.aks_subnet_id]
+    default_action             = length(var.allowed_ip_ranges) > 0 || var.aks_subnet_id != null ? "Deny" : "Allow"
+    ip_rules                   = var.allowed_ip_ranges
+    virtual_network_subnet_ids = var.aks_subnet_id != null ? [var.aks_subnet_id] : []
   }
 }
 

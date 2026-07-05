@@ -50,13 +50,15 @@ module "acr" {
 }
 
 module "keyvault" {
-  source                      = "../../modules/keyvault"
-  name                        = "kv-kafka-lab-dev"
-  location                    = var.location
-  resource_group_name         = module.resource_group.name
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  secrets_reader_principal_id = module.aks.key_vault_secrets_provider_object_id
-  tags                        = local.tags
+  source                       = "../../modules/keyvault"
+  name                         = "kv-kafka-lab-dev"
+  location                     = var.location
+  resource_group_name          = module.resource_group.name
+  tenant_id                    = data.azurerm_client_config.current.tenant_id
+  secrets_reader_principal_id  = module.aks.key_vault_secrets_provider_object_id
+  aks_subnet_id                = module.vnet.subnet_ids["aks"]
+  allowed_ip_ranges             = ["65.109.221.31/32"]
+  tags                          = local.tags
 }
 
 resource "azurerm_user_assigned_identity" "workload" {
@@ -79,4 +81,12 @@ resource "azurerm_federated_identity_credential" "workload" {
   issuer              = module.aks.oidc_issuer_url
   parent_id           = azurerm_user_assigned_identity.workload.id
   subject             = "system:serviceaccount:notifications:notification-apps"
+}
+
+module "velero_storage" {
+  source              = "../../modules/velero-storage"
+  name                 = "velerokafka"
+  location             = var.location
+  resource_group_name  = module.resource_group.name
+  tags                 = local.tags
 }

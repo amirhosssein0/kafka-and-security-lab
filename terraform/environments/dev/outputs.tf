@@ -18,3 +18,12 @@ output "resource_group_name" {
 output "workload_identity_client_id" {
   value = azurerm_user_assigned_identity.workload.client_id
 }
+
+output "velero_storage_account_name" {
+  value = module.velero_storage.storage_account_name
+}
+
+output "velero_storage_account_key" {
+  value     = module.velero_storage.storage_account_key
+  sensitive = true
+}

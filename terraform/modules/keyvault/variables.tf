@@ -53,7 +53,14 @@ variable "tags" {
   default     = {}
 }
 
+variable "allowed_ip_ranges" {
+  description = "List of allowed IP ranges (CIDR) for Key Vault network ACL; empty = allow all"
+  type        = list(string)
+  default     = []
+}
+
 variable "aks_subnet_id" {
-  description = "AKS subnet ID allowed to reach Key Vault"
+  description = "AKS subnet ID allowed through Key Vault network ACL"
   type        = string
+  default     = null
 }

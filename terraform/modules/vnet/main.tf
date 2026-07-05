@@ -12,4 +12,6 @@ resource "azurerm_subnet" "this" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = each.value.address_prefixes
+  service_endpoints = ["Microsoft.KeyVault"]
+
 }
