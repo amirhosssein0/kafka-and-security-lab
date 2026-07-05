@@ -121,5 +121,5 @@ variable "network_policy" {
 variable "max_pods" {
   description = "Maximum pods per node"
   type        = number
-  default     = 110
+  default     = 250
 }

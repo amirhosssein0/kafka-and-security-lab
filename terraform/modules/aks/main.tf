@@ -7,7 +7,6 @@ resource "azurerm_kubernetes_cluster" "this" {
   sku_tier                  = var.sku_tier
   oidc_issuer_enabled       = var.oidc_issuer_enabled
   workload_identity_enabled = var.workload_identity_enabled
-  # automatic_upgrade_channel = var.automatic_upgrade_channel
   tags                      = var.tags
 
   identity {
@@ -16,7 +15,6 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   default_node_pool {
     name                 = "default"
-    temporary_name_for_rotation = "tempdefault"
     vm_size              = var.node_vm_size
     vnet_subnet_id       = var.vnet_subnet_id
     os_disk_size_gb      = var.os_disk_size_gb
@@ -24,6 +22,10 @@ resource "azurerm_kubernetes_cluster" "this" {
     min_count            = var.min_count
     max_count            = var.max_count
     max_pods = var.max_pods
+
+    upgrade_settings {
+      max_surge = "10%"
+    }
   }
 
   network_profile {
