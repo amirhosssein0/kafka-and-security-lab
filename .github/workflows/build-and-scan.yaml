@@ -1,0 +1,90 @@
+name: Build, Scan, and Push Images
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'apps/**'
+  pull_request:
+    paths:
+      - 'apps/**'
+
+env:
+  ACR_LOGIN_SERVER: acrkafkalabdevamirhosssein0.azurecr.io
+
+jobs:
+  build-scan-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [producer, consumer, dlq-handler]
+    outputs:
+      short_sha: ${{ steps.vars.outputs.short_sha }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set short SHA
+        id: vars
+        run: echo "short_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        run: docker build -t ${{ matrix.app }}:ci apps/${{ matrix.app }}
+
+      - name: Run Trivy scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ matrix.app }}:ci
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+
+      - name: Run Checkov on Dockerfile
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: apps/${{ matrix.app }}
+          framework: dockerfile
+          soft_fail: true
+
+      - name: Azure login
+        if: github.event_name == 'push'
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: ACR login
+        if: github.event_name == 'push'
+        run: az acr login --name acrkafkalabdevamirhosssein0
+
+      - name: Tag and push
+        if: github.event_name == 'push'
+        run: |
+          docker tag ${{ matrix.app }}:ci $ACR_LOGIN_SERVER/${{ matrix.app }}:${{ steps.vars.outputs.short_sha }}
+          docker push $ACR_LOGIN_SERVER/${{ matrix.app }}:${{ steps.vars.outputs.short_sha }}
+
+  update-values:
+    runs-on: ubuntu-latest
+    needs: build-scan-push
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: Update image tags in values.yaml
+        run: |
+          SHA=${{ needs.build-scan-push.outputs.short_sha }}
+          yq e ".producer.image.tag = \"$SHA\"" -i helm/notification-system/values.yaml
+          yq e ".consumer.image.tag = \"$SHA\"" -i helm/notification-system/values.yaml
+          yq e ".dlqHandler.image.tag = \"$SHA\"" -i helm/notification-system/values.yaml
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add helm/notification-system/values.yaml
+          git commit -m "ci: bump image tags to ${{ needs.build-scan-push.outputs.short_sha }} [skip ci]" || echo "No changes"
+          git push
