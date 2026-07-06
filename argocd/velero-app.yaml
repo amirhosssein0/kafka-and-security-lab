@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: velero
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://vmware-tanzu.github.io/helm-charts
+    chart: velero
+    targetRevision: "*"
+    helm:
+      values: |
+        credentials:
+          useSecret: true
+          existingSecret: cloud-credentials
+        configuration:
+          backupStorageLocation:
+            - name: default
+              provider: azure
+              bucket: velero-backups
+              config:
+                resourceGroup: rg-kafka-lab-dev
+                storageAccount: velerokafka
+        deployNodeAgent: true
+        snapshotsEnabled: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: velero
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
