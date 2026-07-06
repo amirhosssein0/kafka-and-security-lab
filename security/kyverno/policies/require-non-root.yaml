@@ -20,6 +20,7 @@ spec:
                 - kyverno
                 - falco
                 - velero
+                - argocd
       validate:
         message: "Pods must set securityContext.runAsNonRoot to true"
         pattern:

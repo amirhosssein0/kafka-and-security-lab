@@ -20,6 +20,7 @@ spec:
                 - kyverno
                 - falco
                 - velero
+                - argocd
       validate:
         message: "Privileged containers are not allowed"
         pattern:
