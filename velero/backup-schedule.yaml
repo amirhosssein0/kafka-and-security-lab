@@ -1,0 +1,13 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: daily-notification-system-backup
+  namespace: velero
+spec:
+  schedule: "0 2 * * *"
+  template:
+    includedNamespaces:
+      - notifications
+      - kafka
+    ttl: 168h0m0s
+    storageLocation: default
