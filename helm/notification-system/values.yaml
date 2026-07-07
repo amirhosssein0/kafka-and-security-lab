@@ -1,35 +1,29 @@
 namespace: notifications
-
 acrLoginServer: acrkafkalabdevamirhosssein0.azurecr.io
-
 producer:
   image:
     repository: producer
-    tag: v1
+    tag: 7ffc50e
   replicas: 2
   port: 8080
   autoscaling:
     minReplicas: 2
     maxReplicas: 5
     targetCPUUtilization: 70
-
 consumer:
   image:
     repository: consumer
-    tag: v1
+    tag: 7ffc50e
   replicas: 1
-
 dlqHandler:
   image:
     repository: dlq-handler
-    tag: v1
+    tag: 7ffc50e
   replicas: 1
-
 keyVault:
   name: kv-kafka-lab-dev
   tenantId: "62c02e1b-f29d-4dda-b8a4-9c8a7b734d78"
   workloadIdentityClientId: "212393ff-ca57-40f2-aa30-a5233448ccef"
-
 kafka:
   brokers: "kafka-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
   topic: notifications
