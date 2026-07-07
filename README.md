@@ -7,9 +7,10 @@
 &nbsp;&nbsp;&nbsp;
 <img src="https://cdn.simpleicons.org/argo/EF7B4D" width="60" alt="ArgoCD" />
 &nbsp;&nbsp;&nbsp;
-<img src="https://cdn.simpleicons.org/falcosecurity/00AEC7" width="60" alt="Falco" />
+<img src="https://cdn.simpleicons.org/falco/00AEC7" width="60" alt="Falco" />
 &nbsp;&nbsp;&nbsp;
-<img src="https://cdn.simpleicons.org/microsoftazure/0078D4" width="60" alt="Azure" />
+<img src="https://raw.githubusercontent.com/github/explore/main/topics/azure/azure.png" width="60" alt="Azure" />
+
 
 # kafka-and-security-lab
 **Event-driven notification system on Kubernetes with Kafka (Strimzi) & KEDA autoscaling — secured with Trivy, Checkov, Kyverno, Falco & Velero**
@@ -23,10 +24,10 @@
 ![Trivy](https://img.shields.io/badge/Scan-Trivy-1904DA?style=flat-square)
 ![Checkov](https://img.shields.io/badge/IaC%20Scan-Checkov-4287f5?style=flat-square)
 ![Kyverno](https://img.shields.io/badge/Admission-Kyverno-3D8FD8?style=flat-square)
-![Falco](https://img.shields.io/badge/Runtime-Falco-00AEC7?style=flat-square&logo=falcosecurity&logoColor=white)
+![Falco](https://img.shields.io/badge/Runtime-Falco-00AEC7?style=flat-square&logo=falco&logoColor=white)
 ![Velero](https://img.shields.io/badge/Backup-Velero-4E5EE4?style=flat-square)
 ![Go](https://img.shields.io/badge/Go-App-00ADD8?style=flat-square&logo=go&logoColor=white)
-![Azure](https://img.shields.io/badge/Cloud-Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
+![Azure](https://img.shields.io/badge/Cloud-Azure-0078D4?style=flat-square)
 </div>
 
 ---
