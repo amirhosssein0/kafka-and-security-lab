@@ -1,3 +1,36 @@
+<div align="center">
+<img src="https://cdn.simpleicons.org/apachekafka/231F20" width="60" alt="Kafka" />
+&nbsp;&nbsp;&nbsp;
+<img src="https://cdn.simpleicons.org/kubernetes/326CE5" width="60" alt="Kubernetes" />
+&nbsp;&nbsp;&nbsp;
+<img src="https://cdn.simpleicons.org/terraform/844FBA" width="60" alt="Terraform" />
+&nbsp;&nbsp;&nbsp;
+<img src="https://cdn.simpleicons.org/argo/EF7B4D" width="60" alt="ArgoCD" />
+&nbsp;&nbsp;&nbsp;
+<img src="https://cdn.simpleicons.org/falcosecurity/00AEC7" width="60" alt="Falco" />
+&nbsp;&nbsp;&nbsp;
+<img src="https://cdn.simpleicons.org/microsoftazure/0078D4" width="60" alt="Azure" />
+
+# kafka-and-security-lab
+**Event-driven notification system on Kubernetes with Kafka (Strimzi) & KEDA autoscaling — secured with Trivy, Checkov, Kyverno, Falco & Velero**
+
+![Terraform](https://img.shields.io/badge/IaC-Terraform-844FBA?style=flat-square&logo=terraform&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-AKS-326CE5?style=flat-square&logo=kubernetes&logoColor=white)
+![Kafka](https://img.shields.io/badge/Messaging-Kafka-231F20?style=flat-square&logo=apachekafka&logoColor=white)
+![KEDA](https://img.shields.io/badge/Autoscaling-KEDA-3C7FE7?style=flat-square)
+![Helm](https://img.shields.io/badge/Helm-v3-0F1689?style=flat-square&logo=helm&logoColor=white)
+![ArgoCD](https://img.shields.io/badge/GitOps-ArgoCD-EF7B4D?style=flat-square&logo=argo&logoColor=white)
+![Trivy](https://img.shields.io/badge/Scan-Trivy-1904DA?style=flat-square)
+![Checkov](https://img.shields.io/badge/IaC%20Scan-Checkov-4287f5?style=flat-square)
+![Kyverno](https://img.shields.io/badge/Admission-Kyverno-3D8FD8?style=flat-square)
+![Falco](https://img.shields.io/badge/Runtime-Falco-00AEC7?style=flat-square&logo=falcosecurity&logoColor=white)
+![Velero](https://img.shields.io/badge/Backup-Velero-4E5EE4?style=flat-square)
+![Go](https://img.shields.io/badge/Go-App-00ADD8?style=flat-square&logo=go&logoColor=white)
+![Azure](https://img.shields.io/badge/Cloud-Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
+</div>
+
+---
+
 # Kafka & Security Lab
 
 Event-driven notification system on Kubernetes with Kafka (Strimzi) & KEDA autoscaling — secured with Trivy, Checkov, Kyverno, Falco & Velero.
@@ -199,3 +232,9 @@ See `scripts/destroy.sh` for a scripted version of the full teardown.
 ## License
 
 See [LICENSE](LICENSE).
+
+---
+
+<div align="center">
+<sub>Part of a DevOps portfolio — <a href="https://github.com/amirhosssein0/terraform-lab">terraform-lab</a> | <a href="https://github.com/amirhosssein0/vault-cicd-lab">vault-cicd-lab</a></sub>
+</div>
