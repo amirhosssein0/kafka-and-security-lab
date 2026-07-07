@@ -9,6 +9,9 @@ on:
     paths:
       - 'apps/**'
 
+permissions:
+  contents: write
+
 env:
   ACR_LOGIN_SERVER: acrkafkalabdevamirhosssein0.azurecr.io
 
