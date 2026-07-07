@@ -3,7 +3,7 @@ acrLoginServer: acrkafkalabdevamirhosssein0.azurecr.io
 producer:
   image:
     repository: producer
-    tag: 7ffc50e
+    tag: a331890
   replicas: 2
   port: 8080
   autoscaling:
@@ -13,12 +13,12 @@ producer:
 consumer:
   image:
     repository: consumer
-    tag: 7ffc50e
+    tag: a331890
   replicas: 1
 dlqHandler:
   image:
     repository: dlq-handler
-    tag: 7ffc50e
+    tag: a331890
   replicas: 1
 keyVault:
   name: kv-kafka-lab-dev
