@@ -84,5 +84,3 @@ func main() {
 		log.Fatalf("server failed: %v", err)
 	}
 }
-// ci test 2
-// ci test 2
