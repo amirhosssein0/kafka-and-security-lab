@@ -9,5 +9,3 @@ variable "node_vm_size" {
   type        = string
   default     = "Standard_D2s_v3"
 }
-# ci test
-# ci test
