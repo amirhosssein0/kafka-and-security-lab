@@ -10,3 +10,4 @@ variable "node_vm_size" {
   default     = "Standard_D2s_v3"
 }
 # ci test
+# ci test
